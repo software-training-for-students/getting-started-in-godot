@@ -11,7 +11,7 @@ Whether you’re new to game development or have some programming experience, th
 * [ ] Attach Scripts to create behaviors
 * [ ] Basics of Lighting & Audio
 
-Maybe?
-* Learn how to Build & Test a Godot Project
+#### Maybe?
+* [ ] Learn how to Build & Test a Godot Project
 
 ## 👉 [Get Started (Coming soon)]() (Wiki)

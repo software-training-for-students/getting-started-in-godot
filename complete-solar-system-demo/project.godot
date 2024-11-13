@@ -1,0 +1,13 @@
+config_version=5
+
+[application]
+
+config/name="complete-solar-system-demo"
+run/main_scene="res://Scenes/demo.tscn"
+config/features=PackedStringArray("4.3", "GL Compatibility")
+config/icon="res://icon.png"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

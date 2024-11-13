@@ -1,0 +1,108 @@
+[gd_scene load_steps=18 format=3 uid="uid://dxiihc10h0yfg"]
+
+[ext_resource type="Texture2D" uid="uid://btvje7xwe1m74" path="res://Textures/SpacePanoramaTexture.png" id="1_kipxc"]
+[ext_resource type="Script" path="res://Scripts/focus_on_target.gd" id="2_pi470"]
+[ext_resource type="Script" path="res://Scripts/rotate_around.gd" id="3_58nxq"]
+[ext_resource type="Texture2D" uid="uid://th8n6c2abys" path="res://Textures/SunTexture.jpg" id="4_xkbsf"]
+[ext_resource type="AudioStream" uid="uid://bow8bf3sr2hho" path="res://Audio/into-the-sun.mp3" id="5_sfjju"]
+[ext_resource type="Texture2D" uid="uid://c1s5ir64ls38l" path="res://Textures/Earth_Textures/earth_daymap.jpg" id="6_4tacc"]
+[ext_resource type="Texture2D" uid="uid://q6qoj0fbfnmb" path="res://Textures/MarsTexture.jpg" id="7_8qwd5"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_8x1fb"]
+panorama = ExtResource("1_kipxc")
+
+[sub_resource type="Sky" id="Sky_skrlq"]
+sky_material = SubResource("PanoramaSkyMaterial_8x1fb")
+
+[sub_resource type="Environment" id="Environment_q2hi6"]
+background_mode = 2
+sky = SubResource("Sky_skrlq")
+sky_rotation = Vector3(0.228638, -1.07687, 0)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_258dj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_57e4h"]
+albedo_texture = ExtResource("4_xkbsf")
+emission_enabled = true
+emission = Color(0.327356, 0.325188, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ivkus"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_inv46"]
+albedo_texture = ExtResource("6_4tacc")
+
+[sub_resource type="SphereMesh" id="SphereMesh_ssp0w"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_6ymcg"]
+radius = 0.197702
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wfr4b"]
+albedo_texture = ExtResource("7_8qwd5")
+
+[node name="SolarSystem" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_q2hi6")
+
+[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("default_target")]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 2.38664, 4.47481)
+script = ExtResource("2_pi470")
+default_target = NodePath("../Sun")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Camera3D"]
+light_energy = 0.4
+
+[node name="AudioListener3D" type="AudioListener3D" parent="Camera3D"]
+
+[node name="Sun" type="Marker3D" parent="."]
+gizmo_extents = 0.0
+script = ExtResource("3_58nxq")
+
+[node name="Sun (Hitbox)" type="StaticBody3D" parent="Sun"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sun/Sun (Hitbox)"]
+shape = SubResource("SphereShape3D_258dj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sun"]
+material_override = SubResource("StandardMaterial3D_57e4h")
+mesh = SubResource("SphereMesh_ivkus")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Sun"]
+light_energy = 2.584
+omni_range = 14.4423
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Sun"]
+stream = ExtResource("5_sfjju")
+volume_db = -14.059
+autoplay = true
+parameters/looping = true
+
+[node name="Earth" type="Marker3D" parent="Sun" node_paths=PackedStringArray("target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.88722, 0, 0)
+script = ExtResource("3_58nxq")
+target = NodePath("..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sun/Earth" node_paths=PackedStringArray("target")]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_inv46")
+mesh = SubResource("SphereMesh_ssp0w")
+script = ExtResource("3_58nxq")
+target = NodePath(".")
+
+[node name="Earth (Hitbox)" type="StaticBody3D" parent="Sun/Earth"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sun/Earth/Earth (Hitbox)"]
+shape = SubResource("SphereShape3D_6ymcg")
+
+[node name="Mars" type="Marker3D" parent="Sun"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.52019, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Sun/Mars"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_wfr4b")
+mesh = SubResource("SphereMesh_ssp0w")
+
+[node name="Mars (Hitbox)" type="StaticBody3D" parent="Sun/Mars"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sun/Mars/Mars (Hitbox)"]
+shape = SubResource("SphereShape3D_6ymcg")

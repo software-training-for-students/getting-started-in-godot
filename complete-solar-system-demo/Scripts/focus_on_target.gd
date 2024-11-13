@@ -1,16 +1,27 @@
 extends Camera3D
+class_name FocusCameraOnTarget
+## This script implements camera focus functionality on player mouse clicks
+##
+## Attach to a [Camera3D] node to allow it to focus on a target [StaticBody3D] when the player clicks on it
+## 
+## @Author: Xander Grabowski
 
-# the default object that the camera will look at
-@export var default_target: Node3D 
+## the default [Node3D] that the camera will look at by default
+@export 
+var default_target: Node3D 
 
-# the object that the camera is currently looking at
-# this is altered based on the last Node the player clicked
-@export var current_target: Node3D
+## the object that the [Camera3D] is currently looking at
+## this is altered based on the last Node with a [StaticBody3D] the player clicked
+@export
+var current_target: Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if not is_instance_valid(default_target):
 		push_error("ERROR [focus_on_target.gd]: No default target was set for camera")
+		return
+	
+	self.look_at(default_target.global_position)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

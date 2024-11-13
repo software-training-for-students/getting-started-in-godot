@@ -1,8 +1,15 @@
 extends Node3D
+class_name RotateAround
+## This script implements simple orbital rotation
+##
+## Attach to a [Node3D] node to allow it to orbit around a follow [member target] node 
+## 
+## @Author: Xander Grabowski
 
-#this is the object that the script's game object will rotate around
+## this is the [Node3D] that attached Node will rotate around
 @export var target: Node3D
-#the speed at which this object rotates
+
+## the speed at which this object will rotate
 @export var speed : float = 1.0
 
 # Called when the node enters the scene tree for the first time.

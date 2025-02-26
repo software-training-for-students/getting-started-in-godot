@@ -6,12 +6,12 @@ class_name FocusCameraOnTarget
 ## 
 ## @Author: Xander Grabowski
 
-## the default [Node3D] that the camera will look at by default
+## The default [Node3D] that the camera will look at by default
 @export 
 var default_target: Node3D 
 
-## the object that the [Camera3D] is currently looking at
-## this is altered based on the last Node with a [StaticBody3D] the player clicked
+## The object that the [Camera3D] is currently looking at
+## This is altered based on the last Node with a [StaticBody3D] the player clicked.
 @export
 var current_target: Node3D
 
@@ -32,7 +32,7 @@ func _process(delta: float) -> void:
 
 # Called when there is an input event.
 func _input(event):
-	# we will only handle input when there is an input from pressing a mouse button 
+	# We will only handle input when there is an input from pressing a mouse button 
 	if not event is InputEventMouseButton or not event.pressed:
 		return
 	
@@ -40,7 +40,6 @@ func _input(event):
 	match event.button_index:
 		MOUSE_BUTTON_LEFT:
 			var mouse_pos = get_viewport().get_mouse_position()
-			#print("[DEBUG] mouse clicked at ", mouse_pos)
 			
 			var ray_length = 1000
 			var from = project_ray_origin(mouse_pos)
@@ -52,7 +51,6 @@ func _input(event):
 			var raycast_hit = space_state.intersect_ray(query)
 
 			if not raycast_hit.is_empty():
-				# print("[DEBUG] we clicked something ", raycast_hit)
 				current_target = raycast_hit.collider
 				print("[Debug] current_target changed to " + current_target.name)
 		MOUSE_BUTTON_RIGHT:

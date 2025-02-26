@@ -6,22 +6,21 @@ class_name RotateAround
 ## 
 ## @Author: Xander Grabowski
 
-## this is the [Node3D] that attached Node will rotate around
+## This is the [Node3D] that attached Node will rotate around
 @export var target: Node3D
 
-## the speed at which this object will rotate
+## The speed at which this object will rotate
 @export var speed : float = 1.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# Error Checking:
-	# if we have no target assigned we'll rotate around ourself
+	# Error Checking: if we have no target assigned we'll rotate around ourself
 	if not is_instance_valid(target):
 		target = self
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	# This is the acis we want to rotate around
+	# This is the axis we want to rotate around
 	var axis = Vector3.UP
 	# This is the angle in radians of our rotation
 	var angle = delta * speed

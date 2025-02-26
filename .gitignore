@@ -16,3 +16,6 @@ mono_crash.*.json
 
 # Ignore Builds folder
 [B]uilds/
+
+# Virtual Studio Code
+.vscode/
